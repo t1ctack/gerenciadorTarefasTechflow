@@ -1,0 +1,3 @@
+# Dependencias do projeto - instale com: pip install -r requirements.txt
+Flask==3.1.3
+pytest==8.3.4
