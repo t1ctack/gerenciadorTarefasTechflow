@@ -1,0 +1,115 @@
+/*
+  style.css
+  ---------
+  Estilos da interface do gerenciador de tarefas (tema Kanban).
+*/
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f6fb;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.topo {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: #fff;
+  padding: 24px 16px;
+  text-align: center;
+}
+.topo h1 { font-size: 1.5rem; }
+.topo p { opacity: 0.9; font-size: 0.9rem; margin-top: 4px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+
+.form-card, .filtros {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+.form-card h2 { font-size: 1.05rem; margin-bottom: 12px; }
+
+.campos, .filtros { display: flex; gap: 10px; flex-wrap: wrap; }
+.filtros { align-items: center; }
+
+input, select, button {
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+input { flex: 1 1 180px; }
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+button:hover { background: #1d4ed8; }
+#btn-limpar { background: #6b7280; }
+#btn-limpar:hover { background: #4b5563; }
+
+.mensagem { margin-top: 10px; font-size: 0.85rem; min-height: 18px; }
+.mensagem.erro { color: #dc2626; }
+.mensagem.sucesso { color: #16a34a; }
+
+.kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 760px) { .kanban { grid-template-columns: 1fr; } }
+
+.coluna {
+  background: #eef2f7;
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 200px;
+}
+.coluna h3 {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #94a3b8;
+}
+.card.alta   { border-left-color: #dc2626; }
+.card.media  { border-left-color: #f59e0b; }
+.card.baixa  { border-left-color: #16a34a; }
+
+.card h4 { font-size: 0.95rem; margin-bottom: 4px; }
+.card p { font-size: 0.82rem; color: #475569; margin-bottom: 8px; }
+
+.card .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card .acoes { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.card .acoes button {
+  font-size: 0.72rem;
+  padding: 5px 8px;
+  background: #e2e8f0;
+  color: #1f2937;
+}
+.card .acoes button:hover { background: #cbd5e1; }
+.card .acoes .excluir { background: #fee2e2; color: #b91c1c; }
+.card .acoes .excluir:hover { background: #fecaca; }
+
+.vazio { color: #94a3b8; font-size: 0.82rem; font-style: italic; }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+  index.html
+  ----------
+  Interface web do sistema de gerenciamento de tarefas.
+  Exibe as tarefas em formato de quadro Kanban (A Fazer / Em Progresso / Concluido)
+  e consome a API REST definida em src/app.py via fetch().
+-->
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechFlow - Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <header class="topo">
+    <h1>TechFlow &middot; Gerenciador de Tarefas Agil</h1>
+    <p>Sistema de acompanhamento de fluxo de trabalho em tempo real</p>
+  </header>
+
+  <main class="container">
+    <!-- Formulario de criacao de tarefas -->
+    <section class="form-card">
+      <h2>Nova tarefa</h2>
+      <div class="campos">
+        <input id="titulo" type="text" placeholder="Titulo da tarefa *" maxlength="120" />
+        <input id="descricao" type="text" placeholder="Descricao (opcional)" />
+        <select id="prioridade">
+          <option value="baixa">Prioridade baixa</option>
+          <option value="media" selected>Prioridade media</option>
+          <option value="alta">Prioridade alta</option>
+        </select>
+        <button id="btn-criar">Adicionar</button>
+      </div>
+      <p id="mensagem" class="mensagem"></p>
+    </section>
+
+    <!-- Quadro Kanban -->
+    <section class="kanban">
+      <div class="coluna" data-status="a_fazer">
+        <h3>A Fazer</h3>
+        <div class="lista" id="col-a_fazer"></div>
+      </div>
+      <div class="coluna" data-status="em_progresso">
+        <h3>Em Progresso</h3>
+        <div class="lista" id="col-em_progresso"></div>
+      </div>
+      <div class="coluna" data-status="concluido">
+        <h3>Concluido</h3>
+        <div class="lista" id="col-concluido"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
