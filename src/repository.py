@@ -78,6 +78,32 @@ class RepositorioTarefas:
         ).fetchone()
         return Tarefa.from_row(row) if row else None
 
+    def buscar(
+        self,
+        texto: Optional[str] = None,
+        status: Optional[str] = None,
+        prioridade: Optional[str] = None,
+    ) -> List[Tarefa]:
+        """
+        Busca/filtra tarefas combinando texto (titulo ou descricao), status e
+        prioridade. Funcionalidade adicionada na MUDANCA DE ESCOPO do projeto.
+        """
+        consulta = "SELECT * FROM tarefas WHERE 1 = 1"
+        parametros = []
+        if texto:
+            consulta += " AND (titulo LIKE ? OR descricao LIKE ?)"
+            termo = f"%{texto}%"
+            parametros.extend([termo, termo])
+        if status:
+            consulta += " AND status = ?"
+            parametros.append(status)
+        if prioridade:
+            consulta += " AND prioridade = ?"
+            parametros.append(prioridade)
+        consulta += " ORDER BY id"
+        rows = self.conn.execute(consulta, parametros).fetchall()
+        return [Tarefa.from_row(r) for r in rows]
+
     # ------------------------------------------------------------------ UPDATE
     def atualizar(self, tarefa_id: int, dados: dict) -> Optional[Tarefa]:
         """Atualiza os campos informados de uma tarefa existente."""

@@ -36,6 +36,18 @@
       <p id="mensagem" class="mensagem"></p>
     </section>
 
+    <!-- Barra de busca e filtros (mudanca de escopo) -->
+    <section class="filtros">
+      <input id="busca" type="text" placeholder="Buscar por titulo ou descricao..." />
+      <select id="filtro-prioridade">
+        <option value="">Todas as prioridades</option>
+        <option value="baixa">Baixa</option>
+        <option value="media">Media</option>
+        <option value="alta">Alta</option>
+      </select>
+      <button id="btn-limpar">Limpar filtros</button>
+    </section>
+
     <!-- Quadro Kanban -->
     <section class="kanban">
       <div class="coluna" data-status="a_fazer">

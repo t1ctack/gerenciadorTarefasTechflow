@@ -5,7 +5,7 @@ Aplicacao web (Flask) que expoe a API REST de tarefas e serve a interface.
 
 Endpoints:
     GET    /                      -> pagina HTML (interface Kanban)
-    GET    /api/tarefas           -> lista tarefas (aceita ?status=)
+    GET    /api/tarefas           -> lista tarefas (aceita ?status=, ?prioridade=, ?busca=)
     POST   /api/tarefas           -> cria uma tarefa
     GET    /api/tarefas/<id>      -> obtem uma tarefa
     PUT    /api/tarefas/<id>      -> atualiza uma tarefa
@@ -39,8 +39,14 @@ def criar_app(db_path: str = "tarefas.db") -> Flask:
     # -------------------------------------------------------------- API REST
     @app.route("/api/tarefas", methods=["GET"])
     def listar_tarefas():
+        busca = request.args.get("busca")
         status = request.args.get("status")
-        tarefas = repo.listar(status=status)
+        prioridade = request.args.get("prioridade")
+        # Se houver qualquer filtro, usa busca(); senao, lista tudo.
+        if busca or status or prioridade:
+            tarefas = repo.buscar(texto=busca, status=status, prioridade=prioridade)
+        else:
+            tarefas = repo.listar()
         return jsonify([t.to_dict() for t in tarefas])
 
     @app.route("/api/tarefas", methods=["POST"])

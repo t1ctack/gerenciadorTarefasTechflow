@@ -18,10 +18,21 @@ function mostrarMensagem(texto, tipo) {
   if (texto) setTimeout(() => { el.textContent = ""; el.className = "mensagem"; }, 3000);
 }
 
+// Monta os parametros de busca/filtro a partir dos campos da tela.
+function montarQuery() {
+  const params = new URLSearchParams();
+  const busca = document.getElementById("busca").value.trim();
+  const prioridade = document.getElementById("filtro-prioridade").value;
+  if (busca) params.set("busca", busca);
+  if (prioridade) params.set("prioridade", prioridade);
+  const q = params.toString();
+  return q ? "?" + q : "";
+}
+
 // Busca as tarefas na API e redesenha o quadro.
 async function carregarTarefas() {
   try {
-    const resp = await fetch(API);
+    const resp = await fetch(API + montarQuery());
     const tarefas = await resp.json();
     renderizar(tarefas);
   } catch (e) {
@@ -134,6 +145,13 @@ async function removerTarefa(id) {
 
 // Liga os eventos da tela.
 document.getElementById("btn-criar").onclick = criarTarefa;
+document.getElementById("busca").oninput = carregarTarefas;
+document.getElementById("filtro-prioridade").onchange = carregarTarefas;
+document.getElementById("btn-limpar").onclick = () => {
+  document.getElementById("busca").value = "";
+  document.getElementById("filtro-prioridade").value = "";
+  carregarTarefas();
+};
 
 // Carrega as tarefas ao abrir a pagina.
 carregarTarefas();
